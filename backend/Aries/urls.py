@@ -17,9 +17,26 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path , include
+from django.urls import path , include , re_path
+# from django.conf.urls import url
 from user import urls as user_urls
+from blog import urls as blog_urls
+
+
+from miscellaneous import urls as misc_urls
+from blog import urls as blog_urls
+
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Aries API')
+
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include(user_urls)),
+    path('blogs/',include(blog_urls)),
+    path('misc/', include(misc_urls)),
+    re_path('swagger/', schema_view),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
