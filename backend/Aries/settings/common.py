@@ -3,6 +3,7 @@ from pathlib import Path
 import os
 
 import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,20 +26,27 @@ class Common(Configuration):
     # Application definition
 
     INSTALLED_APPS = [
+       
+        
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.postgres',
+        'corsheaders',
         # packages
         'oauth2_provider',
         'rest_framework',
         'rest_framework_swagger',
         'drf_yasg',
         # apps
+        'blog',
+        'ckeditor',
         'user',
         'miscellaneous',
+
 
     ]
 
@@ -53,9 +61,11 @@ class Common(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
     ]
 
     ROOT_URLCONF = 'Aries.urls'
+    CORS_ALLOW_ALL_ORIGINS = True 
 
     TEMPLATES = [
         {
@@ -132,7 +142,13 @@ class Common(Configuration):
     # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
     STATIC_URL = 'static/'
+    MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+    MEDIA_URL = 'media/'
+    
+    
+    
 
+    
     # Default primary key field type
     # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -143,6 +159,4 @@ class Common(Configuration):
     REST_FRAMEWORK = {
         'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'}
 
-    # CACHE_MIDDLEWARE_ALIAS = 'default'  # The cache alias to use for storage and 'default' is **local-memory cache**.
-    # CACHE_MIDDLEWARE_SECONDS = '60000'    # number of seconds before each page is cached
-    # CACHE_MIDDLEWARE_KEY_PREFIX = ''    # This is used when cache is shared across multiple sites that use the same Django instance. You use an empty string if you don’t care for it.
+

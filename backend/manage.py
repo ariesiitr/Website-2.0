@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 if __name__ == '__main__':
+    # print("env => ",os.environ)
+    
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Aries.settings')
+
 
 
     from configurations.management import execute_from_command_line
