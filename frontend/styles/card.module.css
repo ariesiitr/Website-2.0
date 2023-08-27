@@ -1,0 +1,8 @@
+
+.memberImage:hover + .memberDetails{
+    visibility: hidden;
+}
+
+.memberImage:hover + .memberContacts{
+    z-index: 10;
+}

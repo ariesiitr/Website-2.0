@@ -58,4 +58,7 @@ class Alum(JsonModel, TimestampedModel):
     class Meta:
         verbose_name = "Alum"
         verbose_name_plural = "Alums"
-   
+    
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} {self.user.email}"
