@@ -1,3 +1,4 @@
+from configurations import Configuration
 from pathlib import Path
 import os
 
@@ -10,7 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-from configurations import Configuration
+
+
 class Common(Configuration):
 
     SECRET_KEY = os.environ["SECRET_KEY"]
@@ -18,8 +20,7 @@ class Common(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
-    ALLOWED_HOSTS = []
-
+    ALLOWED_HOSTS = ["*"]
 
     # Application definition
 
@@ -33,12 +34,18 @@ class Common(Configuration):
         # packages
         'oauth2_provider',
         'rest_framework',
+        'rest_framework_swagger',
+        'drf_yasg',
         # apps
         'user',
+        'miscellaneous',
 
     ]
 
     MIDDLEWARE = [
+        'django.middleware.cache.UpdateCacheMiddleware',  # new
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.cache.FetchFromCacheMiddleware',  # new
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -68,7 +75,6 @@ class Common(Configuration):
 
     WSGI_APPLICATION = 'Aries.wsgi.application'
 
-
     # Database
     # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -78,7 +84,13 @@ class Common(Configuration):
             conn_max_age=int(os.getenv("POSTGRES_CONN_MAX_AGE", 600)),
         )
     }
-
+    # TODO: Add redis cache
+    # CACHES = {
+    #     "default": {
+    #         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+    #         "LOCATION": "redis://127.0.0.1:6379",
+    #     }
+    # }
 
     # Password validation
     # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -98,6 +110,12 @@ class Common(Configuration):
         },
     ]
 
+    REST_FRAMEWORK = {
+        'COERCE_DECIMAL_TO_STRING': False,
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE':  12,
+
+    }
 
     # Internationalization
     # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -109,7 +127,6 @@ class Common(Configuration):
     USE_I18N = True
 
     USE_TZ = True
-
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -123,5 +140,9 @@ class Common(Configuration):
 
     AUTH_USER_MODEL = 'user.User'
 
-    
+    REST_FRAMEWORK = {
+        'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'}
 
+    # CACHE_MIDDLEWARE_ALIAS = 'default'  # The cache alias to use for storage and 'default' is **local-memory cache**.
+    # CACHE_MIDDLEWARE_SECONDS = '60000'    # number of seconds before each page is cached
+    # CACHE_MIDDLEWARE_KEY_PREFIX = ''    # This is used when cache is shared across multiple sites that use the same Django instance. You use an empty string if you don’t care for it.
