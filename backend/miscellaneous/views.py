@@ -1,15 +1,15 @@
 from rest_framework.response import Response
-from django.core.cache import cache
-from rest_framework.status import HTTP_200_OK, HTTP_204_NO_CONTENT
-from rest_framework.views import APIView
+from rest_framework.status import HTTP_200_OK
+from rest_framework.generics import ListAPIView
 import random
 from .serilizers import GallerySerializer
 from .models import Gallery
+from Aries.views import ApplicationBaseView
+from utils.pagination import DefaultPagination
 
 
-class GalleryView(APIView):
+class GalleryView(ApplicationBaseView):
     http_method_names = ('get',)
-
     @staticmethod
     def get(request):
         # TODO: Catching in production
@@ -30,6 +30,14 @@ class GalleryView(APIView):
         temp_query_set = GallerySerializer(temp_gallery, many=True)
 
         return Response({"perment": perm_query_set.data, "temp": temp_query_set.data}, status=HTTP_200_OK)
+    
+class GalleryListView(ListAPIView):
+    http_method_names = ('get',)
+    serializer_class = GallerySerializer
+    queryset = Gallery.objects.all()
+    pagination_class = DefaultPagination
+    
+    
 
 
 # Create your views here.
