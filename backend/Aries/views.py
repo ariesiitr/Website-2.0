@@ -9,6 +9,7 @@ class ApplicationBaseView(APIView):
         data = request.data
         client_id = data.get('client_id', None)
         client_secret = data.get('client_secret', None)
+        print(client_id, client_secret,data)
         if not client_secret or not client_secret:
             raise ParseError(em.EMPTY_FIELD('Client ID or Client secret'))
         try:

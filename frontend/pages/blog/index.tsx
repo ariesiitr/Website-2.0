@@ -8,12 +8,12 @@ const Blogs = () => {
   const pageSize = 10;
   const [searchText, setSearchText] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [results, setResults] = useState([]);
-  const { mutate, isLoading } = BlogApi(
-    (res) => {
+  const [results, setResults] = useState<any>([]);
+  const { mutate } = BlogApi(
+    (res: any) => {
       setResults(res.data.results);
     },
-    (err) => {
+    (err:any) => {
       console.log("Mutation error:", err);
     },
   );
@@ -27,7 +27,8 @@ const Blogs = () => {
     }
   };
   const debouncedSearch = debounce((query) => {}, 500);
-  const handleSearchInput = (e) => {
+  const handleSearchInput = (e:any) => {
+
     const query = e.target.value;
     setSearchText(query);
     debouncedSearch(query);
@@ -49,7 +50,7 @@ const Blogs = () => {
   };
   const Search = {
     borderRadius: "12px",
-    background: "rgba(84, 84, 84, 1)",
+    background: "rgb(124,115,105)",
   };
   
 
@@ -59,50 +60,69 @@ const Blogs = () => {
         className="bg bg-cover bg-blur h-screen min-w-screen bg-center "
         style={{ backgroundImage: "url('/bg.png')" }}
       >
-        <div className="w-full relative h-[80%]  flex justify-center">
-          <div
-            className="w-[68%] bg-cover bg-center flex items-start pt-10 pl-14 pb-0 pr-14 flex-col gap-5 text-3xl mt-10  "
-            style={blogStyle}
-  
+         <div className="flex items-center xs:h-[8vh] sm:h-[8vh] justify-center ">
+          <div className="flex justify-between md:hidden sm:w-[90vw] xs:w-[90%]  ml:hidden ">
+          <button
+            className=" ml-3 mt-3 flex items-center justify-center rounded-full  w-8 h-8"
+            style={{ background: "rgba(255, 255, 255, 0.20)" }}
           >
-            <div className="text-white  text-4xl">Blogs</div>
-            <div className="flex px-3 py-3 w-[99%] " style={Search}>
+            <Link href="">
+             
+              <img
+                src="/clarity_arrow-line.svg"
+                className="md:hidden ml:hidden"
+              />
+            </Link>
+          </button>
+          <button
+            className=" mr-3 mt-3 flex items-center justify-center rounded-full w-8 h-8 "
+            style={{ background: "rgba(255, 255, 255, 0.20)" }}
+          >
+            <Link href="">
+              
+              <img src="/charm.svg" className="md:hidden ml:hidden" />
+            </Link>
+          </button>
+          </div>
+        </div>
+        <div className="w-full relative h-[80%] sm:h-[88%] flex justify-center">
+          <div
+            className="w-[68%] md:w-[72%] xs:w-[90%] sm:w-[90%] bg-cover bg-center flex items-start pt-10 pl-14 pb-0 pr-14 xs:pl-3 sm:pl-4 md:pr-6 xs:pt-7 sm:pt-7 md:pt-10 xs:pr-4 sm:pr-5 md:pl-6 flex-col gap-5 sm:gap-3 xs:gap-2 text-3xl mt-10  "
+            style={blogStyle}
+          >
+            <div className="text-white text-4xl sm:text-3xl xs:text-xl">
+              Blogs
+            </div>
+            <div className="flex px-3 py-3 w-[100%]" style={Search}>
               <img src="./ri_search-line.svg" />
               <input
-                type="text "
                 value={searchText}
                 onChange={(e) => {
                   handleSearchInput(e);
                 }}
-                className=" w-[90%]  ml-3 text-2xl text-white-20  placeholder-white "
-                style={{ background: "rgba(84, 84, 84,1)", color: "white" }}
+                className=" w-[98%] ml-3 text-2xl sm:text-xl xs:text-sm text-white-20 placeholder-white"
+                style={{ background: "rgb(124,115,105)", color: "white" }}
                 placeholder="Search"
               />{" "}
             </div>
-            <div className=" w-full h-[70%] overflow-y-scroll scroll-smooth scrollbar-thin  flex flex-col ">
+            <div className="w-full h-[70%] overflow-y-scroll scroll-hidden scroll-smooth scrollbar-thin  flex flex-col ">
               <div className="flex flex-wrap  w-[100%] ">
-                {results.map((result) => (
+                {results.map((result: any) => (
                   <div
                     key={result?.id}
-                    className={`result-cont w-1/4 p-3 h-[40%]  relative group ${styles["result-container"]}`}
+                    className={`result-cont w-1/4 md:w-1/3 sm:w-1/2 xs:w-[100%] p-3 h-[40%]  relative group ${styles["result-container"]}`}
                   >
                     <Link href={`/blog/${result.id}`}>
                       <img
                         src={result?.image_1}
                         alt=""
-                        className="rounded-2xl  w-[100%] transition-transform duration-300 transform hover:scale-105   "
+                        className="rounded-2xl w-[100%] transition-transform duration-300 transform hover:scale-105"
                       />
                       <div className="">
-                        <div
-                          className="text-white font-medium   "
-                          style={{ fontSize: "1.5rem", textAlign: "justify" }}
-                        >
+                        <div className="text-white text-2xl md:text-xl sm:text-xl xs:text-sm font-medium">
                           {result?.title}
                         </div>
-                        <div
-                          className="text-white "
-                          style={{ fontSize: "1.3rem", textAlign: "justify" }}
-                        >
+                        <div className="text-white text-xl sm:text-sm xs:text-xs ">
                           by {result?.name}
                         </div>
                       </div>
@@ -134,9 +154,9 @@ const Blogs = () => {
           )}
         </div>
 
-        <div className="flex  align-center justify-center mt-12 mb-0">
+        <div className="flex xs:hidden sm:hidden align-center justify-center mt-12 mb-0">
           <div
-            className="inline-flex px-2  py-4 items-start gap-2 rounded-3xl  shadow-md shadow-slate-100 backdrop-blur-2xl "
+            className="inline-flex px-2 py-4 items-start gap-2 rounded-3xl shadow-md shadow-slate-100 backdrop-blur-2xl"
             style={styleObj}
           >
             <a href="">

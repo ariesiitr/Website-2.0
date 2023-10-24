@@ -17,24 +17,26 @@ export function addQueryParams(urlString, queryParams) {
 const addClientIdToBody = (body) => {
   return {
     ...body,
-    client_id: process.env.REACT_APP_CLIENT_ID,
-    client_secret: process.env.REACT_APP_CLIENT_SECRET,
+    client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
+    client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
   };
 };
 
 export function request(
   method,
   url,
-  body,
+  data,
   authorized = true,
   contentType = "application/json",
 ) {
   return new Promise(async (resolve, reject) => {
     let headers = { "content-type": contentType };
+    const body = addClientIdToBody(data);
 
     if (authorized) {
       const token = await getKey(TOKEN_TYPE);
-      const body = addClientIdToBody(data);
+      // const body = addClientIdToBody(data);
+      // console.log("body =>",body);
       if (token) {
         headers.Authorization = `Bearer ${token}`;
         axios({
@@ -54,6 +56,7 @@ export function request(
         reject("Unauthorized");
       }
     } else {
+       console.log(body)
       axios({
         method,
         url,

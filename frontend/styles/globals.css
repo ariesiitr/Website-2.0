@@ -25,6 +25,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
 ::-webkit-scrollbar {
   width: 0.75rem;
 }
@@ -50,3 +52,14 @@ body {
   background-color: white;
   border-radius: 10px;
 }
+@media (max-width: 1000px) {
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scroll-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+

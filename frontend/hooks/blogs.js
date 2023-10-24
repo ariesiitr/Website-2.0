@@ -1,17 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
 import { getUrl,addQueryParams, request, getErrorBody } from "../utils/network";
 
-const BlogData = (page, pageSize, searchText) => {
-  let url = getUrl(`/blogs/?page=${page}&pageSize=${pageSize}`);
-  if (searchText) {
-    url += `&search_text=${encodeURIComponent(searchText)}`;
+const BlogData = (data) => {
+  console.log('hi', data)
+  let url = getUrl(`/blogs/?page=${data.page}&pageSize=${data.pageSize}`);
+  if (data.searchText) {
+    url += `&search_text=${encodeURIComponent(data.searchText)}`;
   }
-  return request("GET", url, null, false);
+  return request("GET", url, {}, false);
 };
 
 export const BlogApi = (
-  successCallback=()=>{},
-  errorCallback=()=>{},
+  successCallback,
+  errorCallback
 ) => {
   return useMutation(BlogData, {
     mutationKey: "get-blog-data",
@@ -24,18 +25,18 @@ export const BlogApi = (
   });
 };
 
-const SingleBlog = (id) => {
+const SingleBlogReq = (id) => {
 
   const url = getUrl(`/blogs/blogs/${id}`);
   return request("GET", url, null, false);
 };
 
-export const SingleBlogApi = (
+export const SingleBlogCall = (
   
-  successCallback = () => {},
-  errorCallback = () => {},
+  successCallback ,
+  errorCallback 
 ) => {
-  return useMutation(SingleBlog, {
+  return useMutation(SingleBlogReq, {
     mutationKey: "get-single-blog-data",
     onSuccess: (res) => {
       successCallback(res);

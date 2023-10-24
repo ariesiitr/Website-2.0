@@ -8,18 +8,7 @@
     "start": "next start",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
-    "check-lint": "eslint . --ext ts --ext tsx --ext js",
-    "format": "prettier --write .",
-    "test-all": "yarn check-format && yarn check-lint && yarn check-types && yarn build",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "prettier --write . && git add -A ."
-    }
-  },
-  "lint-staged": {
-    "*": "prettier --write"
+    "check-lint": "eslint . --ext ts --ext tsx --ext js"
   },
   "dependencies": {
     "@tanstack/react-query": "4.33.0",
@@ -31,7 +20,6 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.50.0",
     "eslint-config-next": "13.4.12",
-    "husky": "^8.0.3",
     "lodash": "4.17.21",
     "next": "13.4.12",
     "postcss": "8.4.27",
@@ -44,7 +32,6 @@
     "@types/dotenv": "8.2.0",
     "@types/lodash": "4.14.199",
     "eslint-config-prettier": "9.0.0",
-    "husky": "8.0.0",
     "prettier": "3.0.3"
   }
 }
