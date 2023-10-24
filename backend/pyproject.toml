@@ -47,6 +47,7 @@ google-auth-oauthlib = "0.5.3"
 geocoder = "^1.38.1"
 django-rest-swagger = "^2.2.0"
 drf-yasg = "^1.21.7"
+django-ckeditor = "^6.7.0"
 
 
 [tool.poetry.dev-dependencies]
