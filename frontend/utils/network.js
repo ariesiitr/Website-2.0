@@ -1,6 +1,5 @@
-import * as dotenv from "dotenv";
-dotenv.config({ path: "./.env.local" });
 import axios from "axios";
+
 
 export function addQueryParams(urlString, queryParams) {
   const query = Object.keys(queryParams)
@@ -14,29 +13,30 @@ export function addQueryParams(urlString, queryParams) {
   return `${urlString}?${query}`;
 }
 
-const addClientIdToBody = (body) => {
-  return {
-    ...body,
-    client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
-    client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
-  };
-};
+const addClientIdToBody = body => {
+  
+    return {
+      ...body,
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      client_secret: process.env.REACT_APP_CLIENT_SECRET,
+    };
+  }
+
 
 export function request(
   method,
   url,
   data,
   authorized = true,
-  contentType = "application/json",
+  contentType = "application/json"
 ) {
+
   return new Promise(async (resolve, reject) => {
     let headers = { "content-type": contentType };
-    const body = addClientIdToBody(data);
-
+ 
     if (authorized) {
       const token = await getKey(TOKEN_TYPE);
-      // const body = addClientIdToBody(data);
-      // console.log("body =>",body);
+      const body = addClientIdToBody(data);
       if (token) {
         headers.Authorization = `Bearer ${token}`;
         axios({
@@ -50,13 +50,13 @@ export function request(
             resolve(res);
           })
           .catch((err) => {
+          
             reject(err);
           });
       } else {
         reject("Unauthorized");
       }
     } else {
-     
       axios({
         method,
         url,
@@ -68,6 +68,7 @@ export function request(
           resolve(res);
         })
         .catch((err) => {
+        
           reject(err);
         });
     }
@@ -90,12 +91,12 @@ export const getErrorBody = (error) => {
 };
 
 const get_base_api = () => {
-  // let env = process.env.NODE_ENV;
-  // if (env == 'production') return process.env.PRODUCTION_SERVER;
-  // else if (env == 'staging')
-  //   return process.env.STAGING_SERVER;
-
-  return process.env.NEXT_PUBLIC_DEV_SERVER;
+  let env = process.env.NODE_ENV;
+  if (env == 'production') return process.env.PRODUCTION_SERVER;
+  else if (env == 'staging')
+    return process.env.STAGING_SERVER;
+  
+  return process.env.DEVELOPMENT_SERVER;
 };
 
 export const BASE_API = get_base_api();
@@ -105,7 +106,7 @@ function getBaseImgUrl() {
   let env = process.env.NODE_ENV;
   if (env === "production" || env === "staging" || env === "dev") return "";
   else {
-    return process.env.NEXT_PUBLIC_DEV_SERVER;
+    return process.env.DEVELOPMENT_SERVER;
   }
 }
 
