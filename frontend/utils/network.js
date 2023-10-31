@@ -1,5 +1,3 @@
-import * as dotenv from "dotenv";
-dotenv.config({ path: "./.env.local" });
 import axios from "axios";
 
 export function addQueryParams(urlString, queryParams) {
