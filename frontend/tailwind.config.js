@@ -18,6 +18,7 @@ module.exports = {
       'sm': {'max': '600px','min':'250px'},
       'mg': {'max':'450px','min':'300px'},
       'md': {'max':'1000px','min' : '600px'},
+      'ml': { 'min':"1000px"},
     },
    
   },
