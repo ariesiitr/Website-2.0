@@ -14,10 +14,14 @@ module.exports = {
       },
       screens: {
         xs: { max: "250px" },
-        mg: { max: "450px", min: "300px" },
+        mg: { max: "400px", min: "300px" },
+        ms: { max: "600px", min: "400px" },
         sm: { max: "600px", min: "250px" },
+        sd: { max: "640px", min: "600px" },
         md: { max: "1000px", min: "600px" },
-        ml: { min:"1000px"},
+        mh: { max: "1030px", min: "1000px" },
+        ml: { min: "1000px" },
+        lp: { min: "1300px" }
       },
     },
   },
