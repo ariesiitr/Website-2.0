@@ -11,6 +11,8 @@
     "check-lint": "eslint . --ext ts --ext tsx --ext js"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@tanstack/react-query": "4.33.0",
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
@@ -20,6 +22,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.50.0",
     "eslint-config-next": "13.4.12",
+    "frontend": "file:",
     "lodash": "4.17.21",
     "next": "13.4.12",
     "postcss": "8.4.27",
